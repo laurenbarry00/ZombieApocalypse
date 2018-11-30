@@ -1,0 +1,33 @@
+SimVille
+-
+Has districts with a specific layout
+Can initialize districts and fill with denizens
+Can create a simulation with a varying number of starting zombies, denizens
+Simulation runs until all denizens are zombies
+Days are split into morning, workday, and evening.
+
+
+District
+-
+Has a group of citizens that live/work there
+Has exits to other districts to the north, south, east, and/or west
+Has a unique district name
+
+
+Denizen
+-
+Has a status (ignorant, alarmed, or zombie)
+Has a home location and a work location
+Goes to work location during the workday
+??? Recursive algorithm (w/ backtracking) to traverse the districts? Or just hardcode the route into an array ???
+Goes home in the evenings
+
+- Ignorant -
+
+- Alarmed -
+Does not return home
+Once per tick, alarms another denizen in their district
+
+- Zombie -
+Moves randomly throughout the city
+Once per tick, attempts to bite and infect a non-zombie denizen
