@@ -1,16 +1,35 @@
-<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><help_text></help_text><element><id>UMLClass</id><coordinates><x>260</x><y>360</y><w>210</w><h>150</h></coordinates><panel_attributes>/District/
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><help_text></help_text><element><id>UMLClass</id><coordinates><x>100</x><y>210</y><w>250</w><h>170</h></coordinates><panel_attributes>District
 -
-- int north
-- int south
-- int east
-- int west
-- vector&lt;Denizen&gt; citizens</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>210</x><y>80</y><w>270</w><h>60</h></coordinates><panel_attributes>SimVille
+- string name
+- int alarm_probability
+
 -
-+ unordered_map&lt;int, District&gt; districts</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>620</x><y>360</y><w>210</w><h>150</h></coordinates><panel_attributes>Denizen
+/Locations:/
+Downtown, Uptown, Soho, 
+The Docks, Medical Hill, The University</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>90</x><y>80</y><w>270</w><h>60</h></coordinates><panel_attributes>SimVille
 -
-- Status status
-- District home
-- District work
-- bool isIgnorant
-- int alarmed
-- bool isZombie</panel_attributes><additional_attributes></additional_attributes></element></diagram>
++ binary_search_tree Districts
++ int bite_probability</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>690</x><y>80</y><w>170</w><h>140</h></coordinates><panel_attributes>Denizen
+-
+- int move_speed
+-
++ int get_speed()
++ void set_speed()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>210</x><y>130</y><w>30</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;80</additional_attributes></element><element><id>UMLClass</id><coordinates><x>150</x><y>440</y><w>130</w><h>140</h></coordinates><panel_attributes>enum Location
+-
+DOWNTOWN
+UPTOWN
+SOHO
+THE_DOCKS
+MEDICAL_HILL
+U_DISTRICT</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>960</x><y>300</y><w>90</w><h>30</h></coordinates><panel_attributes>Zombie
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>430</x><y>300</y><w>190</w><h>100</h></coordinates><panel_attributes>Ignorant
+-
+- string name
+-
++ string get_name()
++ void set_name()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>700</x><y>300</y><w>150</w><h>100</h></coordinates><panel_attributes>Alarmed
+-
+- string name
+-
++ string get_name()
++ void set_name()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>520</x><y>210</y><w>260</w><h>110</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>240;10;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>760</x><y>210</y><w>30</w><h>110</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>790</x><y>210</y><w>230</w><h>110</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;210;90</additional_attributes></element></diagram>
