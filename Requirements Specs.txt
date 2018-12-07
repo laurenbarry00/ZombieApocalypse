@@ -2,7 +2,7 @@ This project is a Zombie Apocalypse simulator that takes the number of days the 
 
 This solution uses a binary search tree (BST) to organize the districts within SimVille rather than using the suggested queue. Queues are well-suited to emergency room simulators and the implementations of the other prompts but aren’t ideal for a zombie apocalypse. A BST is more flexible in laying out the districts within SimVille and allows for a denizen to efficiently move through more than one district per time click. A queue would require keeping track of how each district is connected to the others and what traversals can be made, but a BST is constructed with those traversals already a part of the data structure. 
 
-Three hashtables, one for each state, are used to keep track of the denizens. Each hashtable, Ignorant, Alarmed, and Zombies, has the same layout of the denizen as the key and the location enum as the value. 
+One hashtable is used to be keep track of the denizens in relation to where they are. The key is the denizen and the value is a location enum. Denizens are all derived from the same abstract class and broken into the categories of Ignorant, Alarmed, and Zombie. 
 
 Problems 
 Class structure - Eli 
