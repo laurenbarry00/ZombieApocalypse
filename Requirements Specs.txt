@@ -5,14 +5,16 @@ This solution uses a binary search tree (BST) to organize the districts within S
 Three hashtables, one for each state, are used to keep track of the denizens. Each hashtable, Ignorant, Alarmed, and Zombies, has the same layout of the denizen as the key and the location enum as the value. 
 
 Problems 
-The ignorant citizen’s journey to work and back home 
-The aimless shuffling of the alarmed and the zombies -- should think about implementing how long the alarmed feel that it’s safe to stay in one place 
-Schematics for time clicks 
+Class structure - Eli 
+The ignorant citizen’s journey to work and back home - Eli 
+The aimless shuffling of the alarmed and the zombies -- should think about implementing how long the alarmed feel that it’s safe to stay in one place - Eli 
+Schematics for time clicks - Lauren
+- Morning, afternoon, night 
 Probability that someone will be bitten 
 Probability that someone will be alarmed 
 Probability that attempted bite fails
-One (attempted) alarm per alarmed denizen per time click 
-One (attempted) bite per zombie per time click 
+One (attempted) bite per alarmed denizen per time click - Lauren 
+One (attempted) bite per zombie per time click - Lauren 
 
 Advanced mode? 
 The zombies have eaten so many brains that they’ve gained some themselves! Now they’re targeting specific members of the population (e.g., lawmakers, influencers) to corral all their victims into one area for a final feast--but look out, the alarmed citizens are becoming informed, and they’re ready to fight back. 
@@ -39,16 +41,17 @@ Has a status (ignorant, alarmed, or zombie)
 Has a home location and a work location
 Goes to work location during the workday
 ??? Recursive algorithm (w/ backtracking) to traverse the districts? Or just hardcode the route into an array ???
-Goes home in the evenings
 
 - Ignorant - 
 Goes to work, then returns home at the end of the day 
+Goes straight to work or home per time click 
 
 - Alarmed -
 Does not return home
 Once per tick, alarms another denizen in their district
+Can move two districts per time click 
 
 - Zombie -
 Moves randomly throughout the city
 Once per tick, attempts to bite and infect a non-zombie denizen
-
+Can move only one district per time click 
