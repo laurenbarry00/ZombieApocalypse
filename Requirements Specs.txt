@@ -37,7 +37,7 @@ Has a unique district name
 
 Denizen
 -
-Has a status (ignorant, alarmed, or zombie)
+Has an age  
 Has a home location and a work location
 Goes to work location during the workday
 ??? Recursive algorithm (w/ backtracking) to traverse the districts? Or just hardcode the route into an array ???
@@ -47,6 +47,9 @@ Goes to work, then returns home at the end of the day
 Goes straight to work or home per time click 
 
 - Alarmed -
+Once they become alarmed, 
+if age > 70, speed = 1; 
+else speed = 2; 
 Does not return home
 Once per tick, alarms another denizen in their district
 Can move two districts per time click 
