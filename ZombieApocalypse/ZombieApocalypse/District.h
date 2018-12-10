@@ -4,20 +4,6 @@
 #ifndef DISTRICT_H_
 #define DISTRICT_H_
 
-// I would argue that we don't need this class the way that it's
-// currently laid out in the UML because we have the enum. What
-// would be useful is changing the design so that District serves as
-// the node struct for the BST. I've proposed some basic changes in the 
-// uncommented code below based on BST implementation: 
-
-// class District {
-// private:
-//	std::string name;
-//	int alarm_probability; // do we need this? 
-// public:
-//
-// };
-
 template<class T>
 struct District {
 private: 
