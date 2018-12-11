@@ -94,6 +94,12 @@ private:
 						zombie.insert(std::make_pair(z, locations.at(i)));
 						ignorant.erase(ignorant_in_loc.at(ignorant_index));
 					}
+					else {
+						Ignorant ig = ignorant_in_loc.at(ignorant_index);
+						Alarmed a = Alarmed(ig.get_age(), 2);
+						ignorant.erase(ig);
+						alarmed.insert(std::make_pair(a, locations.at(i)));
+					}
 				}
 				else {
 					int alarmed_index = rand() % (alarmed_in_loc.size() + 1); // a random index
