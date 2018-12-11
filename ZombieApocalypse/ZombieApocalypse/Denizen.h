@@ -9,7 +9,9 @@ private:
 	int age;
 public: 
 	Denizen(int age) : age(age) {}
-	virtual int get_age(); 
+	int get_age() {
+		return age;
+	}
 };
 
 #endif

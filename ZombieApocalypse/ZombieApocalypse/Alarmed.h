@@ -8,14 +8,36 @@
 
 class Alarmed : public Denizen, public Walker {
 private: 
-	const int move_speed;
+	int id;
 public: 
-	Alarmed(int age, int move_speed) : 
-		Denizen(age), move_speed(move_speed), Walker(2) {}
+	Alarmed(int age) : Denizen(age), Walker(2) {
+		id = rand();
+	}
 
-	const int get_speed() {
-		return move_speed;
+	int get_id() const {
+		return id;
+	}
+
+	bool operator==(const Alarmed &other) const {
+		return (id == other.id);
 	}
 };
+
+namespace std {
+	template<>
+	struct hash<Alarmed> {
+		std::size_t operator()(const Alarmed& a) const {
+			using std::size_t;
+			using std::hash;
+			using std::string;
+
+			size_t hash_output = 0;
+			for (size_t i = 0; i < 5; i++) {
+				hash_output += (71 * hash_output + i) % 5;
+			}
+			return hash_output;
+		}
+	};
+}
 
 #endif 
