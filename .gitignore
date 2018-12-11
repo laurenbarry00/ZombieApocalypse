@@ -31,4 +31,7 @@
 *.out
 *.app
 
+# Ignored folders
 ZombieApocalypse/.vs/
+ZombieApocalypse/ZombieApocalypse/x64
+ZombieApocalypse/x64
