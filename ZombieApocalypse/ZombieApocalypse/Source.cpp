@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "Simulator.h"
 #include "District.h"
 
 int main() {
@@ -7,4 +8,7 @@ int main() {
 	root->insert(root, 6);
 	root->insert(root, 2); 
 	root->print(root); 
+
+	Simulator sim = Simulator();
+	sim.run();
 }

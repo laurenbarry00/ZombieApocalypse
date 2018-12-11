@@ -10,6 +10,7 @@
 #include <vector>
 #include <string>
 #include <cstdlib>
+#include <fstream>
 
 #ifndef SIMULATOR_H_
 #define SIMULATOR_H_
@@ -153,8 +154,21 @@ private:
 	}
 
 public:
-	Simulator(int days, int zombies, Location loc, double ign_ratio, double alrm_ratio)
-		: NUM_DAYS(days), START_ZOMBS(zombies), START_LOC(loc), IGNORANT_BITTEN_RATIO(ign_ratio), ALARMED_BITTEN_RATIO(alrm_ratio), time_of_day(0), days_run(0) {}
+	Simulator(int days, int zombies, int denizens, Location loc, double ign_ratio, double alrm_ratio)
+		: NUM_DAYS(days), START_ZOMBS(zombies), START_LOC(loc), IGNORANT_BITTEN_RATIO(ign_ratio), ALARMED_BITTEN_RATIO(alrm_ratio), time_of_day(0), days_run(0) {
+		int denizens_populated = 0;
+
+		// create the zombie(s) and place them in the start location
+		for (int i = 0; i < zombies; i++) {
+			Zombie z = Zombie();
+			zombie.insert(std::make_pair(z, loc));
+			denizens_populated++;
+		}
+
+		std::ifstream names_file;
+		names_file.open("residents.txt");
+		
+	}
 
 
 	/*
@@ -165,6 +179,14 @@ public:
 	Simulator() : NUM_DAYS(999), START_ZOMBS(1), START_LOC(Location::U_DISTRICT), IGNORANT_BITTEN_RATIO(0.30), ALARMED_BITTEN_RATIO(0.20) {
 		time_of_day = 0;
 		days_run = 0;
+		int denizens_populated = 0;
+
+		Zombie z = Zombie();
+		zombie.insert(std::make_pair(z, Location::U_DISTRICT));
+		denizens_populated++;
+		do {
+			
+		} while (denizens_populated < 30); // Defaults to 30 denizens in the simulation
 	}
 
 	void create_tree() {
