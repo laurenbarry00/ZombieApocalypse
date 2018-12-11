@@ -5,18 +5,20 @@
 #include "Ignorant.h"
 #include "Alarmed.h"
 #include "Zombie.h"
+#include "District.h"
 #include <unordered_map>
 #include <iostream>
 #include <vector>
 #include <string>
 #include <cstdlib>
-#include <fstream>
 
 #ifndef SIMULATOR_H_
 #define SIMULATOR_H_
 
 class Simulator {
 private:
+	District<int>* root = new District<int>(3); 
+
 	const int NUM_DAYS;
 	const int START_ZOMBS;
 	const Location START_LOC;
@@ -26,8 +28,6 @@ private:
 	int time_of_day; // 0 = morning, 1 = afternoon, 2 = evening
 	int days_run;
 
-	std::vector<Location> locations = { Location::DOWNTOWN, Location::MEDICAL_HILL, Location::SOHO, Location::THE_DOCKS, Location::UPTOWN, Location::U_DISTRICT };
-
 	std::unordered_map<Ignorant, Location> ignorant;
 	std::unordered_map<Alarmed, Location> alarmed;
 	std::unordered_map<Zombie, Location> zombie;
@@ -35,6 +35,9 @@ private:
 	void tick() {
 		switch (time_of_day) {
 			case 0: // Morning
+				// No movement in this phase.
+				// Considering removing bite/alarm attempt here as well. Morning could be like, a "check-in" period
+				// without any actions taking place.
 				attempt_bite_and_alarm();
 				std::cout << "DAY " << days_run << ", MORNING" << std::endl;
 				print_simulation_report();
@@ -69,49 +72,30 @@ private:
 
 	void attempt_bite_and_alarm() {
 		std::unordered_map<Alarmed, Location>::iterator itr;
-		for (int i = 0; i < locations.size(); i++) {
-			std::vector<Alarmed> alarmed_in_loc = get_keys_by_location(alarmed, locations.at(i));
-			std::vector<Ignorant> ignorant_in_loc = get_keys_by_location(ignorant, locations.at(i));
-			for (Ignorant ig : ignorant_in_loc) {
-				Alarmed a = Alarmed(ig.get_name, ig.get_age);
-				alarmed.insert(std::make_pair(a, locations.at(i)));
-				ignorant.erase(ig); // Remove ignorant and "move" it to alarmed
-			}
-
-			std::vector<Zombie> zombies_in_loc = get_keys_by_location(zombie, locations.at(i));
-			for (int i = 0; i < zombies_in_loc.size(); i++) {
-				int alarmed_or_ignorant = rand() % 2; // Choosing between whether the zombie bites an alarmed or an ignorant
-				if (alarmed_or_ignorant == 1) {
-					int ignorant_index = rand() % (ignorant_in_loc.size() + 1); // a random index
-					double probability = (double) rand() / 100;
-					if (probability < IGNORANT_BITTEN_RATIO) {
-						Zombie z = Zombie();
-						zombie.insert(std::make_pair(z, locations.at(i)));
-						ignorant.erase(ignorant_in_loc.at(ignorant_index));
-					}
-				}
-				else {
-					int alarmed_index = rand() % (alarmed_in_loc.size() + 1); // a random index
-					double probability = (double)rand() / 100;
-					if (probability < IGNORANT_BITTEN_RATIO) {
-						Zombie z = Zombie();
-						zombie.insert(std::make_pair(z, locations.at(i)));
-						alarmed.erase(alarmed_in_loc.at(alarmed_index));
-					}
-				}
-			}
+		for (itr = alarmed.begin(); itr != alarmed.end(); ++itr) {
+			// TODO: Implement bite/alarm attempt
 		}
 	}
 
-	template <typename T> std::vector<T> get_keys_by_location(std::unordered_map<T, Location> map, Location loc) {
-		std::unordered_map<T, Location>::iterator itr;
-		std::vector<T> keys;
+	std::vector<Denizen> get_denizens_by_location(std::unordered_map<Denizen, Location> map, Location loc) {
+		std::vector<Denizen> denizens_in_location;
+		std::unordered_map<Denizen, Location>::iterator itr;
 		for (itr = map.begin(); itr != map.end(); ++itr) {
-			if (itr->second == loc) {
-				keys.push_back(itr->first);
+			/* TODO: Implement get_denizens_by_location()
+			if (map.find(itr->first) == loc) {
+				denizens_in_location.push_back(map.find(itr->first));
 			}
+			*/
 		}
-		return keys;
+	}
+
+	//problem: magic numbers
+	void populate_tree() {
+		root->insert(root, 2);
+		root->insert(root, 1);
+		root->insert(root, 5);
+		root->insert(root, 4);
+		root->insert(root, 6);
 	}
 
 	// IGNORANT 
@@ -142,33 +126,35 @@ private:
 		// alarmed 
 		std::unordered_map<Alarmed, Location>::iterator itr;
 		for (itr = alarmed.begin(); itr != alarmed.end(); ++itr) {
-			Location current = itr->second;
-			// implement probability
+			int id = static_cast<int>(itr->second); 
+			District<int>* parent = root->search(root, id);
+			for (int i = 1; i < itr->first.get_speed(); ++i) {
+				int probability = rand() % 3 + 1; 
+				switch (probability) {
+				case 1:
+					itr->second = (Location)parent->data; 
+					break;
+				case 2: 
+					if (parent->left != NULL) {
+						itr->second = (Location)parent->left->data;
+						break; 
+					}
+				case 3:
+					if (parent->right != NULL) {
+						itr->second = (Location)parent->right->data; 
+						break;
+					}
+				default: 
+					itr->second = (Location)parent->data; 
+					break; 
+				}
+			}
 		}
-
-		// zombs 
-		// iterate over list of alarmed or zombs 
-		// get current location 
-		// place current location based on binary tree 
-		// based on speed, choose random direction to go 
 	}
 
 public:
-	Simulator(int days, int zombies, int denizens, Location loc, double ign_ratio, double alrm_ratio)
-		: NUM_DAYS(days), START_ZOMBS(zombies), START_LOC(loc), IGNORANT_BITTEN_RATIO(ign_ratio), ALARMED_BITTEN_RATIO(alrm_ratio), time_of_day(0), days_run(0) {
-		int denizens_populated = 0;
-
-		// create the zombie(s) and place them in the start location
-		for (int i = 0; i < zombies; i++) {
-			Zombie z = Zombie();
-			zombie.insert(std::make_pair(z, loc));
-			denizens_populated++;
-		}
-
-		std::ifstream names_file;
-		names_file.open("residents.txt");
-		
-	}
+	Simulator(int days, int zombies, Location loc, double ign_ratio, double alrm_ratio)
+		: NUM_DAYS(days), START_ZOMBS(zombies), START_LOC(loc), IGNORANT_BITTEN_RATIO(ign_ratio), ALARMED_BITTEN_RATIO(alrm_ratio), time_of_day(0), days_run(0) {}
 
 
 	/*
@@ -176,21 +162,9 @@ public:
 	 * This has practically no time limit for the simulation to run, so it will run until all ignorant and alarmed are bitten successfully. 
 	 * We might have to play around with the default ratios to see what's reasonable, as well as the number of zombies at the start.
 	 */
-	Simulator() : NUM_DAYS(999), START_ZOMBS(1), START_LOC(Location::U_DISTRICT), IGNORANT_BITTEN_RATIO(0.30), ALARMED_BITTEN_RATIO(0.20) {
+	Simulator() : NUM_DAYS(999), START_ZOMBS(1), START_LOC(Location::U_DISTRICT), IGNORANT_BITTEN_RATIO(30), ALARMED_BITTEN_RATIO(20) {
 		time_of_day = 0;
 		days_run = 0;
-		int denizens_populated = 0;
-
-		Zombie z = Zombie();
-		zombie.insert(std::make_pair(z, Location::U_DISTRICT));
-		denizens_populated++;
-		do {
-			
-		} while (denizens_populated < 30); // Defaults to 30 denizens in the simulation
-	}
-
-	void create_tree() {
-
 	}
 
 	void run() {

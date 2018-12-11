@@ -157,6 +157,7 @@
     <ClInclude Include="Ignorant.h" />
     <ClInclude Include="Location.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Simulator.h" />
     <ClInclude Include="Walker.h" />
     <ClInclude Include="Zombie.h" />
@@ -170,6 +171,9 @@
     </ClCompile>
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="ZombieApocalypse.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ZombieApocalypse.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

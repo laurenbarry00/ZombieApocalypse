@@ -8,6 +8,6 @@ private:
 	int move_speed; 
 public: 
 	Walker(int speed) : move_speed(speed) {}
-	virtual int get_speed(); 
+	int get_speed(); 
 };
 #endif 

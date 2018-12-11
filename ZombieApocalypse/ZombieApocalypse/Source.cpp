@@ -1,14 +1,24 @@
+// reading a text file
 #include "pch.h"
-#include "Simulator.h"
-#include "District.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
 
 int main() {
-	District<int>* root = new District<int>(3); 
-	root->insert(root, 1);
-	root->insert(root, 6);
-	root->insert(root, 2); 
-	root->print(root); 
+	string line;
+	ifstream myfile("resident.txt");
 
-	Simulator sim = Simulator();
-	sim.run();
+	if (myfile.is_open())
+	{
+		while (getline(myfile, line))
+		{
+			cout << line << '\n';
+		}
+		myfile.close();
+	}
+
+	else cout << "Unable to open file" << endl;
+
+	return 0;
 }

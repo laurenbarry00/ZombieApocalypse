@@ -1,6 +1,7 @@
 #pragma once
 #include "pch.h"
 #include <string>
+#include "Location.h"
 
 #ifndef DISTRICT_H_
 #define DISTRICT_H_
@@ -20,9 +21,7 @@ public:
 	}
 
 	District* insert(struct District* node, T id) {
-		std::cout << "Hello World" << std::endl; 
 		if (id < node->data) {
-			std::cout << "Hello Worldf" << std::endl; 
 			if (node->left == NULL) {
 				node->left = new District<T>(id); 
 			}
@@ -31,7 +30,6 @@ public:
 			}
 		}
 		else if (id > node->data) {
-			std::cout << "Hello Worlde" << std::endl;
 			if (node->right == NULL) {
 				node->right = new District<T>(id); 
 			}
@@ -48,8 +46,28 @@ public:
 		std::cout << root->data << " ";
 		print(root->right); 
 	}
-	District* search(); 
-	// for our purposes, we probably won't need a delete function. May need a height function
+
+	District* search(District<T>* root, int id) {
+		if (root->data == id) {
+			return root; 
+		}
+		if (root->data < id) {
+			if (root->right->data == id) {
+				return root; 
+			}
+			else {
+				return search(root->right, id); 
+			}
+		}
+		else if (root->data > id) {
+			if (root->left->data == id) {
+				return root; 
+			}
+			else {
+				return search(root->left, id); 
+			}
+		}
+	}
 };
 
 #endif 
