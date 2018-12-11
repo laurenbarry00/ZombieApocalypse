@@ -92,11 +92,11 @@ private:
 			}
 
 			std::vector<Zombie> zombies_in_loc = get_keys_by_location(zombie, locations.at(i));
-			for (int i = 0; i < zombies_in_loc.size(); i++) {
+			for (int j = 0; j < zombies_in_loc.size(); j++) {
 				if (alarmed_in_loc.size() > 0 && ignorant_in_loc.size() > 0) {
 					int alarmed_or_ignorant = rand() % 2; // Choosing between whether the zombie bites an alarmed or an ignorant
 					if (alarmed_or_ignorant == 0) { // Try to bite a random alarmed
-						int alarmed_index = rand() % (alarmed_in_loc.size() + 1); // a random index
+						int alarmed_index = rand() % (alarmed_in_loc.size()); // a random index
 						double probability = 100 * ((double)rand() / (double)RAND_MAX) / 100;
 						if (probability < IGNORANT_BITTEN_RATIO) {
 							Zombie z = Zombie();
@@ -105,7 +105,7 @@ private:
 						}
 					}
 					else { // Try to bite a random ignorant
-						int ignorant_index = rand() % (ignorant_in_loc.size() + 1); // a random index
+						int ignorant_index = rand() % (ignorant_in_loc.size()); // a random index
 						double probability = 100 * ((double)rand() / (double)RAND_MAX) / 100;
 						if (probability < IGNORANT_BITTEN_RATIO) {
 							Zombie z = Zombie();
@@ -121,7 +121,7 @@ private:
 					}
 				}
 				else if (alarmed_in_loc.size() > 0 && ignorant_in_loc.size() == 0) {
-					int alarmed_index = rand() % (alarmed_in_loc.size() + 1); // a random index
+					int alarmed_index = rand() % (alarmed_in_loc.size()); // a random index
 					double probability = 100 * ((double)rand() / (double)RAND_MAX) / 100;
 					if (probability < IGNORANT_BITTEN_RATIO) {
 						Zombie z = Zombie();
@@ -130,7 +130,7 @@ private:
 					}
 				}
 				else if (ignorant_in_loc.size() > 0 && alarmed_in_loc.size() == 0) {
-					int ignorant_index = rand() % (ignorant_in_loc.size() + 1); // a random index
+					int ignorant_index = rand() % (ignorant_in_loc.size()); // a random index
 					double probability = 100 * ((double)rand() / (double)RAND_MAX) / 100;
 					if (probability < IGNORANT_BITTEN_RATIO) {
 						Zombie z = Zombie();
@@ -309,7 +309,7 @@ public:
 	 * This has practically no time limit for the simulation to run, so it will run until all ignorant and alarmed are bitten successfully. 
 	 * We might have to play around with the default ratios to see what's reasonable, as well as the number of zombies at the start.
 	 */
-	Simulator() : NUM_DAYS(100), START_ZOMBS(1), START_LOC(Location::U_DISTRICT), IGNORANT_BITTEN_RATIO(0.60), ALARMED_BITTEN_RATIO(0.   ) {
+	Simulator() : NUM_DAYS(20), START_ZOMBS(1), START_LOC(Location::U_DISTRICT), IGNORANT_BITTEN_RATIO(0.60), ALARMED_BITTEN_RATIO(0.   ) {
 		time_of_day = 0;
 		days_run = 0;
 		int denizens_populated = 0;
