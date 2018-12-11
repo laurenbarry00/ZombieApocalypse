@@ -30,28 +30,28 @@ private:
 	void tick() {
 		switch (time_of_day) {
 			case 0: // Morning
-				// No movement in this phase.
-				// Considering removing bite/alarm attempt here as well. Morning could be like, a "check-in" period
-				// without any actions taking place.
 				attempt_bite_and_alarm();
 				std::cout << "DAY " << days_run << ", MORNING" << std::endl;
 				print_simulation_report();
+
+				commute_work();
 				time_of_day++;
 				break;
 
 			case 1: // Afternoon
-				commute_work();
 				attempt_bite_and_alarm();
 				std::cout << "DAY " << days_run << ", AFTERNOON" << std::endl;
 				print_simulation_report();
+
+				commute_home();
 				time_of_day++;
 				break;
 
 			case 2: // Evening
-				commute_home();
 				attempt_bite_and_alarm();
 				std::cout << "DAY " << days_run << ", EVENING" << std::endl;
 				print_simulation_report();
+
 				days_run++;
 				time_of_day = 0;
 				break;
@@ -68,20 +68,12 @@ private:
 	void attempt_bite_and_alarm() {
 		std::unordered_map<Alarmed, Location>::iterator itr;
 		for (itr = alarmed.begin(); itr != alarmed.end(); ++itr) {
-			// TODO: Implement bite/alarm attempt
+			
 		}
 	}
 
 	std::vector<Denizen> get_denizens_by_location(std::unordered_map<Denizen, Location> map, Location loc) {
-		std::vector<Denizen> denizens_in_location;
-		std::unordered_map<Denizen, Location>::iterator itr;
-		for (itr = map.begin(); itr != map.end(); ++itr) {
-			/* TODO: Implement get_denizens_by_location()
-			if (map.find(itr->first) == loc) {
-				denizens_in_location.push_back(map.find(itr->first));
-			}
-			*/
-		}
+		
 	}
 
 	// IGNORANT 
