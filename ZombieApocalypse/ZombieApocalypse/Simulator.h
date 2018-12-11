@@ -6,6 +6,7 @@
 #include "Alarmed.h"
 #include "Zombie.h"
 #include "District.h"
+#include <Windows.h>
 #include <unordered_map>
 #include <iostream>
 #include <vector>
@@ -98,7 +99,7 @@ private:
 					if (alarmed_or_ignorant == 0) { // Try to bite a random alarmed
 						int alarmed_index = rand() % (alarmed_in_loc.size()); // a random index
 						double probability = 100 * ((double)rand() / (double)RAND_MAX) / 100;
-						if (probability < IGNORANT_BITTEN_RATIO) {
+						if (probability < ALARMED_BITTEN_RATIO) {
 							Zombie z = Zombie();
 							zombie.insert(std::make_pair(z, locations.at(i)));
 							alarmed.erase(alarmed_in_loc.at(alarmed_index));
@@ -123,7 +124,7 @@ private:
 				else if (alarmed_in_loc.size() > 0 && ignorant_in_loc.size() == 0) {
 					int alarmed_index = rand() % (alarmed_in_loc.size()); // a random index
 					double probability = 100 * ((double)rand() / (double)RAND_MAX) / 100;
-					if (probability < IGNORANT_BITTEN_RATIO) {
+					if (probability < ALARMED_BITTEN_RATIO) {
 						Zombie z = Zombie();
 						zombie.insert(std::make_pair(z, locations.at(i)));
 						alarmed.erase(alarmed_in_loc.at(alarmed_index));
@@ -309,7 +310,7 @@ public:
 	 * This has practically no time limit for the simulation to run, so it will run until all ignorant and alarmed are bitten successfully. 
 	 * We might have to play around with the default ratios to see what's reasonable, as well as the number of zombies at the start.
 	 */
-	Simulator() : NUM_DAYS(20), START_ZOMBS(1), START_LOC(Location::U_DISTRICT), IGNORANT_BITTEN_RATIO(0.60), ALARMED_BITTEN_RATIO(0.   ) {
+	Simulator() : NUM_DAYS(20), START_ZOMBS(1), START_LOC(Location::U_DISTRICT), IGNORANT_BITTEN_RATIO(0.60), ALARMED_BITTEN_RATIO(0.40) {
 		time_of_day = 0;
 		days_run = 0;
 		int denizens_populated = 0;
@@ -339,6 +340,7 @@ public:
 			}
 			else {
 				tick();
+				Sleep(1000);
 			}
 		} while (ignorant.size() > 0 || alarmed.size() > 0);
 	}

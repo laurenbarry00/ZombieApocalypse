@@ -1,6 +1,6 @@
 ﻿cl : Command line warning D9025: overriding '/sdl' with '/GS-'
   Source.cpp
-c:\users\flame\coding\zombieapocalypse\zombieapocalypse\zombieapocalypse\simulator.h(83): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\flame\coding\zombieapocalypse\zombieapocalypse\zombieapocalypse\simulator.h(84): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 c:\users\flame\coding\zombieapocalypse\zombieapocalypse\zombieapocalypse\source.cpp(10): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 c:\users\flame\coding\zombieapocalypse\zombieapocalypse\zombieapocalypse\district.h(70): warning C4715: 'District<int>::search': not all control paths return a value
   ZombieApocalypse.vcxproj -> C:\Users\flame\Coding\ZombieApocalypse\ZombieApocalypse\x64\Debug\ZombieApocalypse.exe
