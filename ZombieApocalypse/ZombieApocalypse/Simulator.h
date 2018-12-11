@@ -24,6 +24,8 @@ private:
 	int time_of_day; // 0 = morning, 1 = afternoon, 2 = evening
 	int days_run;
 
+	std::vector<Location> locations = { Location::DOWNTOWN, Location::MEDICAL_HILL, Location::SOHO, Location::THE_DOCKS, Location::UPTOWN, Location::U_DISTRICT };
+
 	std::unordered_map<Ignorant, Location> ignorant;
 	std::unordered_map<Alarmed, Location> alarmed;
 	std::unordered_map<Zombie, Location> zombie;
@@ -31,9 +33,6 @@ private:
 	void tick() {
 		switch (time_of_day) {
 			case 0: // Morning
-				// No movement in this phase.
-				// Considering removing bite/alarm attempt here as well. Morning could be like, a "check-in" period
-				// without any actions taking place.
 				attempt_bite_and_alarm();
 				std::cout << "DAY " << days_run << ", MORNING" << std::endl;
 				print_simulation_report();
@@ -68,21 +67,27 @@ private:
 
 	void attempt_bite_and_alarm() {
 		std::unordered_map<Alarmed, Location>::iterator itr;
-		for (itr = alarmed.begin(); itr != alarmed.end(); ++itr) {
-			// TODO: Implement bite/alarm attempt
+		for (int i = 0; i < locations.size(); i++) {
+			int alarmed_in_loc = get_keys_by_location(alarmed, locations.at(i)).size();
+			std::vector<Ignorant> ignorant_in_loc = get_keys_by_location(ignorant, locations.at(i));
+			for (Ignorant ig : ignorant_in_loc) {
+				Alarmed a = Alarmed(ig.get_name, ig.get_age);
+				Location b = Location::THE_DOCKS;
+				alarmed.insert(std::make_pair(a, b));
+				ignorant.erase(ig); // Remove ignorant and "move" it to alarmed
+			}
 		}
 	}
 
-	std::vector<Denizen> get_denizens_by_location(std::unordered_map<Denizen, Location> map, Location loc) {
-		std::vector<Denizen> denizens_in_location;
-		std::unordered_map<Denizen, Location>::iterator itr;
+	template <typename T> std::vector<T> get_keys_by_location(std::unordered_map<T, Location> map, Location loc) {
+		std::unordered_map<T, Location>::iterator itr;
+		std::vector<T> keys;
 		for (itr = map.begin(); itr != map.end(); ++itr) {
-			/* TODO: Implement get_denizens_by_location()
-			if (map.find(itr->first) == loc) {
-				denizens_in_location.push_back(map.find(itr->first));
+			if (itr->second == loc) {
+				keys.push_back(itr->first);
 			}
-			*/
 		}
+		return keys;
 	}
 
 	// IGNORANT 
