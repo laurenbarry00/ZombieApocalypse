@@ -9,6 +9,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <cstdlib>
 
 #ifndef SIMULATOR_H_
 #define SIMULATOR_H_
@@ -68,13 +69,35 @@ private:
 	void attempt_bite_and_alarm() {
 		std::unordered_map<Alarmed, Location>::iterator itr;
 		for (int i = 0; i < locations.size(); i++) {
-			int alarmed_in_loc = get_keys_by_location(alarmed, locations.at(i)).size();
+			std::vector<Alarmed> alarmed_in_loc = get_keys_by_location(alarmed, locations.at(i));
 			std::vector<Ignorant> ignorant_in_loc = get_keys_by_location(ignorant, locations.at(i));
 			for (Ignorant ig : ignorant_in_loc) {
 				Alarmed a = Alarmed(ig.get_name, ig.get_age);
-				Location b = Location::THE_DOCKS;
-				alarmed.insert(std::make_pair(a, b));
+				alarmed.insert(std::make_pair(a, locations.at(i)));
 				ignorant.erase(ig); // Remove ignorant and "move" it to alarmed
+			}
+
+			std::vector<Zombie> zombies_in_loc = get_keys_by_location(zombie, locations.at(i));
+			for (int i = 0; i < zombies_in_loc.size(); i++) {
+				int alarmed_or_ignorant = rand() % 2; // Choosing between whether the zombie bites an alarmed or an ignorant
+				if (alarmed_or_ignorant == 1) {
+					int ignorant_index = rand() % (ignorant_in_loc.size() + 1); // a random index
+					double probability = (double) rand() / 100;
+					if (probability < IGNORANT_BITTEN_RATIO) {
+						Zombie z = Zombie();
+						zombie.insert(std::make_pair(z, locations.at(i)));
+						ignorant.erase(ignorant_in_loc.at(ignorant_index));
+					}
+				}
+				else {
+					int alarmed_index = rand() % (alarmed_in_loc.size() + 1); // a random index
+					double probability = (double)rand() / 100;
+					if (probability < IGNORANT_BITTEN_RATIO) {
+						Zombie z = Zombie();
+						zombie.insert(std::make_pair(z, locations.at(i)));
+						alarmed.erase(alarmed_in_loc.at(alarmed_index));
+					}
+				}
 			}
 		}
 	}
@@ -139,7 +162,7 @@ public:
 	 * This has practically no time limit for the simulation to run, so it will run until all ignorant and alarmed are bitten successfully. 
 	 * We might have to play around with the default ratios to see what's reasonable, as well as the number of zombies at the start.
 	 */
-	Simulator() : NUM_DAYS(999), START_ZOMBS(1), START_LOC(Location::U_DISTRICT), IGNORANT_BITTEN_RATIO(30), ALARMED_BITTEN_RATIO(20) {
+	Simulator() : NUM_DAYS(999), START_ZOMBS(1), START_LOC(Location::U_DISTRICT), IGNORANT_BITTEN_RATIO(0.30), ALARMED_BITTEN_RATIO(0.20) {
 		time_of_day = 0;
 		days_run = 0;
 	}
