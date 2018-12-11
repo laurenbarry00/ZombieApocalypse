@@ -11,8 +11,8 @@ private:
 	Location work; 
 	Location home; 
 public: 
-	Ignorant(std::string name, int age, Location work, Location home) :
-		Denizen(name, age), work(work), home(home) {}
+	Ignorant(int age, Location work, Location home) :
+		Denizen(age), work(work), home(home) {}
 
 	Location get_home() const { return home; }
 

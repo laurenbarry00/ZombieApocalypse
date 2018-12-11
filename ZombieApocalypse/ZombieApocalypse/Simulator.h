@@ -78,7 +78,7 @@ private:
 			std::vector<Alarmed> alarmed_in_loc = get_keys_by_location(alarmed, locations.at(i));
 			std::vector<Ignorant> ignorant_in_loc = get_keys_by_location(ignorant, locations.at(i));
 			for (Ignorant ig : ignorant_in_loc) {
-				Alarmed a = Alarmed(ig.get_name, ig.get_age);
+				Alarmed a = Alarmed(ig.get_age);
 				alarmed.insert(std::make_pair(a, locations.at(i)));
 				ignorant.erase(ig); // Remove ignorant and "move" it to alarmed
 			}
@@ -158,7 +158,8 @@ private:
 		for (itr = alarmed.begin(); itr != alarmed.end(); ++itr) {
 			int id = static_cast<int>(itr->second); 
 			District<int>* parent = root->search(root, id);
-			for (int i = 1; i < itr->first.get_speed(); ++i) {
+			int j = 2; 
+			for (int i = 1; i < j; ++i) {
 				int probability = rand() % 3 + 1; 
 				switch (probability) {
 				case 1:
@@ -193,6 +194,11 @@ public:
 			zombie.insert(std::make_pair(z, loc));
 			denizens_populated++;
 			}
+
+		// magic number
+		for (int i = denizens_populated; i < 2000; i++) {
+			Ignorant* ig = new Ignorant(20, Location::THE_DOCKS, Location::SOHO); 
+		}
 		}
 
 

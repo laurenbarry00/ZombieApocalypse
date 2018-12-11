@@ -6,11 +6,9 @@
 
 class Denizen {
 private: 
-	std::string name; 
 	int age;
 public: 
-	Denizen(std::string name, int age) : name(name), age(age) {}
-	virtual std::string get_name(); 
+	Denizen(int age) : age(age) {}
 	virtual int get_age(); 
 };
 

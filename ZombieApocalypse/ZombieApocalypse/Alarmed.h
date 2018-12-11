@@ -7,12 +7,14 @@
 #define ALARMED_H_
 
 class Alarmed : public Denizen, public Walker {
+private: 
+	const int move_speed;
 public: 
-	Alarmed(std::string name, int age) : 
-		Denizen(name, age), Walker(2) {}
-	
-	int get_speed() const {
-		return move_speed; 
+	Alarmed(int age, int move_speed) : 
+		Denizen(age), move_speed(move_speed), Walker(2) {}
+
+	const int get_speed() {
+		return move_speed;
 	}
 };
 
