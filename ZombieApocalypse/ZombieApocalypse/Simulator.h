@@ -1,4 +1,5 @@
 #pragma once
+#include "pch.h"
 
 #include "Location.h"
 #include "Ignorant.h"
@@ -30,28 +31,28 @@ private:
 	void tick() {
 		switch (time_of_day) {
 			case 0: // Morning
+				// No movement in this phase.
+				// Considering removing bite/alarm attempt here as well. Morning could be like, a "check-in" period
+				// without any actions taking place.
 				attempt_bite_and_alarm();
 				std::cout << "DAY " << days_run << ", MORNING" << std::endl;
 				print_simulation_report();
-
-				commute_work();
 				time_of_day++;
 				break;
 
 			case 1: // Afternoon
+				commute_work();
 				attempt_bite_and_alarm();
 				std::cout << "DAY " << days_run << ", AFTERNOON" << std::endl;
 				print_simulation_report();
-
-				commute_home();
 				time_of_day++;
 				break;
 
 			case 2: // Evening
+				commute_home();
 				attempt_bite_and_alarm();
 				std::cout << "DAY " << days_run << ", EVENING" << std::endl;
 				print_simulation_report();
-
 				days_run++;
 				time_of_day = 0;
 				break;
@@ -68,12 +69,20 @@ private:
 	void attempt_bite_and_alarm() {
 		std::unordered_map<Alarmed, Location>::iterator itr;
 		for (itr = alarmed.begin(); itr != alarmed.end(); ++itr) {
-			
+			// TODO: Implement bite/alarm attempt
 		}
 	}
 
 	std::vector<Denizen> get_denizens_by_location(std::unordered_map<Denizen, Location> map, Location loc) {
-		
+		std::vector<Denizen> denizens_in_location;
+		std::unordered_map<Denizen, Location>::iterator itr;
+		for (itr = map.begin(); itr != map.end(); ++itr) {
+			/* TODO: Implement get_denizens_by_location()
+			if (map.find(itr->first) == loc) {
+				denizens_in_location.push_back(map.find(itr->first));
+			}
+			*/
+		}
 	}
 
 	// IGNORANT 
@@ -100,12 +109,24 @@ private:
 		}
 	}
 
+	void shuffle() {
+		// alarmed 
+		std::unordered_map<Alarmed, Location>::iterator itr;
+		for (itr = alarmed.begin(); itr != alarmed.end(); ++itr) {
+			Location current = itr->second;
+			// implement probability
+		}
+
+		// zombs 
+		// iterate over list of alarmed or zombs 
+		// get current location 
+		// place current location based on binary tree 
+		// based on speed, choose random direction to go 
+	}
+
 public:
 	Simulator(int days, int zombies, Location loc, double ign_ratio, double alrm_ratio)
-		: NUM_DAYS(days), START_ZOMBS(zombies), START_LOC(loc), IGNORANT_BITTEN_RATIO(ign_ratio), ALARMED_BITTEN_RATIO(alrm_ratio) {
-		time_of_day = 0; // Begins in the morning
-		days_run = 0;
-	}
+		: NUM_DAYS(days), START_ZOMBS(zombies), START_LOC(loc), IGNORANT_BITTEN_RATIO(ign_ratio), ALARMED_BITTEN_RATIO(alrm_ratio), time_of_day(0), days_run(0) {}
 
 
 	/*
@@ -116,6 +137,10 @@ public:
 	Simulator() : NUM_DAYS(999), START_ZOMBS(1), START_LOC(Location::U_DISTRICT), IGNORANT_BITTEN_RATIO(30), ALARMED_BITTEN_RATIO(20) {
 		time_of_day = 0;
 		days_run = 0;
+	}
+
+	void create_tree() {
+
 	}
 
 	void run() {

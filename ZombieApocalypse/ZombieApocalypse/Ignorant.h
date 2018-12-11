@@ -1,11 +1,12 @@
 #pragma once
+#include "pch.h"
 #include "Denizen.h" 
 #include "Location.h" 
 
 #ifndef IGNORANT_H_
 #define IGNORANT_H_
 
-class Ignorant : Denizen {
+class Ignorant : public Denizen {
 private: 
 	Location work; 
 	Location home; 
