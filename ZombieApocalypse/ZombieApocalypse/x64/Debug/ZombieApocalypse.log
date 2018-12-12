@@ -1,6 +1,6 @@
 ﻿cl : Command line warning D9025: overriding '/sdl' with '/GS-'
   ZombieApocalypse.cpp
-\\cs1\2022\lbarry22\cs-273-1\final\zombieapocalypse\zombieapocalypse\zombieapocalypse\simulator.h(89): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-\\cs1\2022\lbarry22\cs-273-1\final\zombieapocalypse\zombieapocalypse\zombieapocalypse\zombieapocalypse.cpp(8): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-\\cs1\2022\lbarry22\cs-273-1\final\zombieapocalypse\zombieapocalypse\zombieapocalypse\district.h(71): warning C4715: 'District<int>::search': not all control paths return a value
-  ZombieApocalypse.vcxproj -> \\Cs1\2022\lbarry22\CS-273-1\FINAL\ZombieApocalypse\ZombieApocalypse\x64\Debug\ZombieApocalypse.exe
+c:\users\flame\coding\zombieapocalypse\zombieapocalypse\zombieapocalypse\simulator.h(89): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\flame\coding\zombieapocalypse\zombieapocalypse\zombieapocalypse\zombieapocalypse.cpp(8): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\flame\coding\zombieapocalypse\zombieapocalypse\zombieapocalypse\district.h(71): warning C4715: 'District<int>::search': not all control paths return a value
+  ZombieApocalypse.vcxproj -> C:\Users\flame\Coding\ZombieApocalypse\ZombieApocalypse\x64\Debug\ZombieApocalypse.exe

@@ -223,7 +223,7 @@ private:
 		for (itr = alarmed.begin(); itr != alarmed.end(); ++itr) {
 			int id = static_cast<int>(itr->second); 
 			District<int>* parent = root->search(root, id);
-			for (int i = 1; i < itr->first.get_speed(); ++i) {
+			for (int i = 1; i < 2; ++i) { // Default speed for Walkers is 2
 				int probability = rand() % 3 + 1; 
 				switch (probability) {
 				case 1:
@@ -251,26 +251,26 @@ private:
 		for (itr_z = zombie.begin(); itr_z != zombie.end(); ++itr_z) {
 			int id = static_cast<int>(itr_z->second);
 			District<int>* parent = root->search(root, id);
-			for (int i = 1; i < itr->first.get_speed(); ++i) {
-				int probability = rand() % 3 + 1;
-				switch (probability) {
-				case 1:
-					itr_z->second = (Location)parent->data;
-					break;
-				case 2:
-					if (parent->left != NULL) {
-						itr_z->second = (Location)parent->left->data;
-						break;
-					}
-				case 3:
-					if (parent->right != NULL) {
-						itr_z->second = (Location)parent->right->data;
-						break;
-					}
-				default:
-					itr_z->second = (Location)parent->data;
+
+			// Only need to do this once, since zombies' move speed is 1.
+			int probability = rand() % 3 + 1;
+			switch (probability) {
+			case 1:
+				itr_z->second = (Location)parent->data;
+				break;
+			case 2:
+				if (parent->left != NULL) {
+					itr_z->second = (Location)parent->left->data;
 					break;
 				}
+			case 3:
+				if (parent->right != NULL) {
+					itr_z->second = (Location)parent->right->data;
+					break;
+				}
+			default:
+				itr_z->second = (Location)parent->data;
+				break;
 			}
 		}
 	}
@@ -310,7 +310,7 @@ public:
 
 
 	// Default constructor that creates the districts and populates them 
-	Simulator() : NUM_DAYS(20), START_ZOMBS(1), START_LOC(Location::U_DISTRICT), IGNORANT_BITTEN_RATIO(0.60), ALARMED_BITTEN_RATIO(0.40) {
+	Simulator() : NUM_DAYS(8), START_ZOMBS(1), START_LOC(Location::U_DISTRICT), IGNORANT_BITTEN_RATIO(0.60), ALARMED_BITTEN_RATIO(0.40) {
 		time_of_day = 0;
 		days_run = 0;
 		int denizens_populated = 0;
