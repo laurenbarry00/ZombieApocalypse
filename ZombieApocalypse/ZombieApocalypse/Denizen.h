@@ -9,9 +9,8 @@ private:
 	int age;
 public: 
 	Denizen(int age) : age(age) {}
-	int get_age() {
-		return age;
-	}
+
+	int get_age() const { return age; }
 };
 
 #endif

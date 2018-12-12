@@ -4,6 +4,8 @@
 #ifndef LOCATION_H_
 #define LOCATION_H_
 
+// Types defined by integer for easy of use in changing loc
+// Numbered by desired layout within the BST 
 enum class Location {
 	DOWNTOWN = 3,
 	UPTOWN = 1, 

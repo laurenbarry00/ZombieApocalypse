@@ -18,11 +18,14 @@ public:
 		return id;
 	}
 
+	// Overloading the == operator to compare one Alarmed person to another
 	bool operator==(const Alarmed &other) const {
 		return (id == other.id);
 	}
 };
 
+// Hashing function for the Alarmed Hashmap 
+// Required because of the custom type 
 namespace std {
 	template<>
 	struct hash<Alarmed> {

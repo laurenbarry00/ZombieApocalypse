@@ -17,11 +17,14 @@ public:
 		return id;
 	}
 
+	// Overloading the == operator to compare one Zombie person to another
 	bool operator==(const Zombie &other) const {
 		return (id == other.id);
 	}
 };
 
+// Hashing function for the Zombie Hashmap 
+// Required because of the custom type 
 namespace std {
 	template<>
 	struct hash<Zombie> {
