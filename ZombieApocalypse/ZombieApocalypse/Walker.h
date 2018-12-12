@@ -9,7 +9,7 @@ private:
 public: 
 	Walker(int speed) : move_speed(speed) {}
 
-	int get_speed() {
+	int get_speed() const {
 		return move_speed; 
 	}
 };

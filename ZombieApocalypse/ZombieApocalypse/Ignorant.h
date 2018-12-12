@@ -13,23 +13,22 @@ private:
 	int id;
 public: 
 	Ignorant(int age, Location work, Location home) :
-		Denizen(age), work(work), home(home) {
-		id = rand();
-	}
+		Denizen(age), work(work), home(home), id(rand()) {}
 
 	Location get_home() const { return home; }
 
 	Location get_workplace() const { return work; }
 
-	int get_id() const {
-		return id;
-	}
+	int get_id() const { return id; }
 
+	// Overloading the == operator to compare one Ignorant person to another
 	bool operator==(const Ignorant &other) const {
 		return (id == other.id);
 	}
 };
 
+// Hashing function for the Ignorant Hashmap 
+// Required because of the custom type 
 namespace std {
 	template<>
 	struct hash<Ignorant> {
